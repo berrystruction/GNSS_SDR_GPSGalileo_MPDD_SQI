@@ -1,0 +1,8 @@
+ChangeLog GNSS MATLAB receiver (22/06/2016)
+- multiple file analysis
+- checking of unlocked channel at tracking level
+- ionospheric corrections (to check)
+- Carrier smoothing (to check)
+- Protection Levels computation (to check)
+- some bugs fixed
+- improving of graphical experience and information
