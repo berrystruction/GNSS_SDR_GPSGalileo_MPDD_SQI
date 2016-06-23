@@ -40,7 +40,7 @@ function settings = initSettings()
 %% Processing settings ====================================================
 % Number of milliseconds to be processed used 36000 + any transients (see
 % below - in Nav parameters) to ensure nav subframes are provided
-settings.msToProcess        = 30*60*1000;        %[ms]
+settings.msToProcess        = 1*60*1000;        %[ms]
 
 % Number of channels to be used for signal processing
 settings.numberOfChannels   = 7;
@@ -122,7 +122,7 @@ settings.skipNumberOfBytes     = ceil(settings.seek_sec*settings.samplingFreq*se
 settings.skipAcquisition    = 0;
 % List of satellites to look for. Some satellites can be excluded to speed
 % up acquisition
-settings.acqSatelliteList   = [ 8  10 11  14  22 18 32];%[1 4 11 15 18 21 24];%[2 6 12 17 19 24 25];%   [2 6 12 17 2 19];%    %[2 5 7:12 14:20 22 24:32];%[2 6 12 17 19 24 25];%[2 5 12 20 21 25 29 31];%[1, 4, 11, 15, 18, 21, 24];%[1 4 11 15 18 21 24];%[1 4 6 7 10 11 15 18 19 20 21 24 29];%[6 4 24 21 11 1  19 10 20 29 7];%[5 7 9 13 20 28 30];%[11 18 21 22 27];%[1 4 11 16 21 22 27]; % [1,4,19,21,27]; %[1:3 5:26 28:32]; % [1:15 17 18 20 21 23:26 28:32]         %[PRN numbers]
+settings.acqSatelliteList   = 1:32;%[8  10 11  14  22 18 32];%[1 4 11 15 18 21 24];%[2 6 12 17 19 24 25];%   [2 6 12 17 2 19];%    %[2 5 7:12 14:20 22 24:32];%[2 6 12 17 19 24 25];%[2 5 12 20 21 25 29 31];%[1, 4, 11, 15, 18, 21, 24];%[1 4 11 15 18 21 24];%[1 4 6 7 10 11 15 18 19 20 21 24 29];%[6 4 24 21 11 1  19 10 20 29 7];%[5 7 9 13 20 28 30];%[11 18 21 22 27];%[1 4 11 16 21 22 27]; % [1,4,19,21,27]; %[1:3 5:26 28:32]; % [1:15 17 18 20 21 23:26 28:32]         %[PRN numbers]
 % Band around IF to search for satellite signal. Depends on max Doppler
 settings.acqSearchBand      = 14; % 14           %[kHz]
 settings.acqSearchStep      = 250; % 250          %[Hz]

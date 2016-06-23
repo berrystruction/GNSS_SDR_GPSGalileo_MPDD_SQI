@@ -218,15 +218,13 @@ if (fid > 0)
     settings.SQIpenalty=0.0; % SQI covariance penalty factor
     settings.SQIexclusion=false; % SQI controlled exclusion
     
-    settings.RAIM.enableRAIM=false;
+    %settings.RAIM.enableRAIM=true;
     %settings.RAIM.type=0; % 0-RS (Residual method), 1-SS (Solution separation method)
     %settings.RAIM.RecomputePVT=5;
     
     kalmanSettings.staticposition=false;
     
     trackResultsNsat=trackResults;%([1 6 3 2 9 10]);%([1:8 9 10]);%([10 6 9 3 2 1]);%([1 3 4 10 7]);%([1 2 6 8 9]);%([1:7]);%([1:6  8:10]);%([1:3 5 8 9]);%([1:6 8]);%([1:8]);%([ 1:7 9 10]);%([1 7 8 9 10 11 12 13]);
-    
-    LSorWLS=1;  % Navigation solution parameters: 1 -> LS, 0 -> WLS
     
 %     for chn=[1:length(trackResultsNsat)]
 %         figure, plot(abs(trackResultsNsat(chn).I_P),'b'), hold on,
@@ -240,6 +238,7 @@ if (fid > 0)
 %     figure, subplot(211), plot(xtime,-(1/settings.codeFreqBasis - 1./trackResults(chn).codeFreq),xtime,mean(-(1/settings.codeFreqBasis - 1./trackResults(chn).codeFreq))*ones(size(xtime)),'r-'), xlabel('Time [s]'), ylabel('Corrections [s]')
 %     grid on, title('T_{chip} corrections'), subplot(212), plot(xtime,-(trackResults(chn).codeFreq - settings.codeFreqBasis),xtime,mean(-(trackResults(chn).codeFreq - settings.codeFreqBasis))*ones(size(xtime)),'r'), grid on, xlabel('Time [s]'), ylabel('Corrections [Hz]'), title('NCO corrections')
 %     
+    LSorWLS=1;  % parameters: 1 -> LS, 0 -> WLS
     
     for pvt2=1:1
         
@@ -268,7 +267,7 @@ if (fid > 0)
             %% If the ionospheric delay is computed
             if settings.useIonoCorr==1
                 xtime=([0:length(navSolutions.E(end,:))-1]+floor(settings.msToProcess/settings.navSolPeriod-length(navSolutions.E(end,:))))*settings.navSolPeriod/1e3;
-                plot(xtime,IONOdelay(1,:)/settings.c/1e-9,'.-'), grid on, xlabel('Time [s]'), ylabel('Ionospheric delay [ns]'), title('Ionospheric delay profile')
+                plot(xtime,IONOdelay(1,:)/settings.c,'.-'), grid on, xlabel('Time [s]'), ylabel('Ionospheric delay [s]')
             end            
 %             figure
 %             subplot(211)

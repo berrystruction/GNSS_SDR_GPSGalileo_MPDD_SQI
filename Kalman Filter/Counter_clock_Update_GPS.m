@@ -68,7 +68,7 @@ for ij=1:num_sat
     % Drift correction
     Doppler(ij) = Doppler(ij)*(1-(Drift/settings.c));
     
-    if (settings.enable_smoothL1)
+    if (settings.CS.enable_smoothL1)
         time = (0:channels_GPS(ij).AbsoluteSample_residual_samples) ./ settings.samplingFreq;
         trigarg_doppler = (Doppler(ij) * 2.0 * pi) .* time + channels_GPS(ij).rem_fraction(pos_Prec_bit);
         channels_GPS(ij).phase_TR_fract = rem(trigarg_doppler(end), (2*pi))*settings.lambdaL1/(2*pi);
