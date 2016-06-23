@@ -344,19 +344,19 @@ for channelNr = 1:settings.numberOfChannels
             
             
             %% Accumulated Phase measurements for Carrier Smoothing
-            %inst_phase = 2*pi*carrfreq*Tc;
-            if (loopcnt>1)
-                trigarg_doppler = ((carrfreq-settings.IF)*2*pi.*time) + trackResults(channelNr).rem_fraction(loopcnt-1);
-                trackResults(channelNr).rem_fraction(loopcnt) = rem(trigarg_doppler(blksize+1),(2 * pi));
-                trackResults(channelNr).rem_integer(loopcnt)  = trackResults(channelNr).rem_integer(loopcnt-1) + fix(trigarg_doppler(blksize+1)/(2*pi));
-                %accumulated_phase(loopcnt) =  trackResults(channelNr).rem_integer(loopcnt)+trackResults(channelNr).rem_fraction(loopcnt)/(2*pi);
-                %trackResults(channelNr).accumulated_phase_scint(loopcnt) = trackResults(channelNr).accumulated_phase_scint(loopcnt-1)+inst_phase;
+            %inst_phase = 2*pi*carrFreq*Tc;
+            if (loopCnt>1)
+                trigarg_doppler = ((carrFreq-settings.IF)*2*pi.*time) + trackResults(channelNr).rem_fraction(loopCnt-1);
+                trackResults(channelNr).rem_fraction(loopCnt) = rem(trigarg_doppler(blksize+1),(2 * pi));
+                trackResults(channelNr).rem_integer(loopCnt)  = trackResults(channelNr).rem_integer(loopCnt-1) + fix(trigarg_doppler(blksize+1)/(2*pi));
+                %accumulated_phase(loopCnt) =  trackResults(channelNr).rem_integer(loopCnt)+trackResults(channelNr).rem_fraction(loopCnt)/(2*pi);
+                %trackResults(channelNr).accumulated_phase_scint(loopCnt) = trackResults(channelNr).accumulated_phase_scint(loopCnt-1)+inst_phase;
             else
                 trigarg_doppler = (carrFreq-settings.IF)*2*pi.*time;
-                trackResults(channelNr).rem_fraction(loopcnt) = rem(trigarg_doppler(blksize+1),(2 * pi));
-                trackResults(channelNr).rem_integer(loopcnt)  = fix(trigarg_doppler(blksize+1)/(2*pi));
-                %accumulated_phase(loopcnt) = trackResults(channelNr).rem_integer(loopcnt)+trackResults(channelNr).rem_fraction(loopcnt)/(2*pi);
-                %trackResults(channelNr).accumulated_phase_scint(loopcnt) = inst_phase;
+                trackResults(channelNr).rem_fraction(loopCnt) = rem(trigarg_doppler(blksize+1),(2 * pi));
+                trackResults(channelNr).rem_integer(loopCnt)  = fix(trigarg_doppler(blksize+1)/(2*pi));
+                %accumulated_phase(loopCnt) = trackResults(channelNr).rem_integer(loopCnt)+trackResults(channelNr).rem_fraction(loopCnt)/(2*pi);
+                %trackResults(channelNr).accumulated_phase_scint(loopCnt) = inst_phase;
             end
             %%
             

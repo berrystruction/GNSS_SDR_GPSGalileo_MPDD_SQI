@@ -220,7 +220,7 @@ for currMeasNr = 1:length_time
                 pseudoCumul,SQI([channels_GPS_L1(activeChnList_GPS_L1).PRN],currMeasNr),SQIthreshold,settings.SQIpenalty);
                 
             while(all_is_ok==-1 && length(activeChnList_GPS_L1)>=4)
-                % Carrier smoothing solution?
+                
                 if(settings.CS.enable_smoothL1 == 1)
                     if(currMeasNr == 1)
                         [pos,satElev(activeChnList_GPS_L1),az,dop,RAIMresult] = leastSquarePos_Doppler(satpos,pseudo_codeL1(:,currMeasNr),channels_GPS_L1(activeChnList_GPS_L1), Doppler_GPS_L1, settings);
@@ -230,6 +230,7 @@ for currMeasNr = 1:length_time
                     end
                     bias = bias+pos(4)-pos(8);
                 else % No carrier smoothing
+                    
                     
                     % Navigation solution computation
                     if LSorWLS==1
@@ -243,8 +244,8 @@ for currMeasNr = 1:length_time
                         
                         navSolutions.WDOP(:, currMeasNr)       = wdop;
                     end
+                    
                 end
-                
                 RecomputePVT=RecomputePVT+1;
                 RAIMresults(currMeasNr) = RAIMresult;
                 

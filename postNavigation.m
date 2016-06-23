@@ -1,4 +1,4 @@
-function [navSolutions, eph, RAIMresults, unreliableSol,TGlobalTest,TlocalTest,GlobalThres,remainingSV,SVexcluded] = postNavigation(trackResults,settings,settingsMPDD,SQIchannels,LSorWLS)
+function [navSolutions, eph, RAIMresults, unreliableSol, TGlobalTest, TlocalTest, GlobalThres, remainingSV, SVexcluded, IONOdelay] = postNavigation(trackResults,settings,settingsMPDD,SQIchannels,LSorWLS)
 %Function calculates navigation solutions for the receiver (pseudoranges,
 %positions). At the end it converts coordinates from the WGS84 system to
 %the UTM, geocentric or any additional coordinate system.
@@ -131,6 +131,9 @@ PL.VSlopeMax2=NaN;
 PL.HPL2=NaN;
 PL.VPL2=NaN;
 PL.lambda2=NaN;
+
+% Initialization Ionospheric delay
+IONOdelay=zeros(length(readyChnList),endprocessingtime);
 
 % Start processing
 for currMeasNr = 1:endprocessingtime
@@ -307,7 +310,7 @@ for currMeasNr = 1:endprocessingtime
                             navSolutions.channel.el(activeChnList, currMeasNr), ...
                             navSolutions.channel.az(activeChnList, currMeasNr), ...
                             navSolutions.DOP(:, currMeasNr),...
-                            ausiliaryVariableforRAIM] = ...
+                            ausiliaryVariableforRAIM, IONOdelay(activeChnList,currMeasNr)] = ...
                             leastSquarePos(satPositions(:,activeChnList), ...
                             navSolutions.channel.rawP(activeChnList, currMeasNr)' + satClkCorr(activeChnList) * settings.c, ...
                             settings,...
@@ -423,7 +426,7 @@ for currMeasNr = 1:endprocessingtime
                             SVexcluded(currMeasNr).PRN(SVexclIndex)=additionalPRNexcluded;
                             SVexclIndex=SVexclIndex+1;
                             
-                            Tg=TGlobalTest(currMeasNr);
+                            %Tg=TGlobalTest(currMeasNr);
                             activeChnList_prev=activeChnList;
                             activeChnList=setdiff(activeChnList,activeChnList(minpos));
                             DOP_prev=navSolutions.DOP(:, currMeasNr);

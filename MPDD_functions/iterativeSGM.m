@@ -162,7 +162,7 @@ for channelNr = 1:settings.numberOfChannels
     
     SQI(trackResults(channelNr).PRN,:)= MPDD_part2(-(MPresults(channelNr,:)*2-1),stima_CN0,settings,settingsMPDD,timesize);
     austime=(settingsMPDD.MPDDoffset+[settings.navSolPeriod:settings.navSolPeriod:settings.msToProcess])/1e3+seekPRN; % asse dei tempi
-    ausindex=((CalibrationTime+austime(1))-austime)>1;    
+    ausindex=((CalibrationTime+austime(1))-austime)>=1;    
     SQI(trackResults(channelNr).PRN,ausindex)=1; % NaN
 
     subplot(326)

@@ -169,16 +169,17 @@ if (~isempty(navSolutions))
     end
     
     %% Protection Level vs Time plot
-    figure
-    subplot(221)
-    plot(xtime,[navSolutions.PL(:).HPL],'r',xtime,[navSolutions.PL(:).HPL2],'bo'), title('Horizontal Protection Level'), grid on, xlabel('Time [s]'), ylabel('HPL [m]')
-    subplot(222)
-    plot(xtime,[navSolutions.PL(:).VPL],'r',xtime,[navSolutions.PL(:).VPL2],'bo'), title('Vertical Protection Level'), grid on, xlabel('Time [s]'), ylabel('VPL [m]')
-    subplot(223)
-    plot(xtime,[navSolutions.PL(:).HRMS],'r',xtime,[navSolutions.PL(:).HRMS2],'b'), title('Horizontal Positioning accuracy'), grid on, xlabel('Time [s]'), ylabel('HRMS [m]')
-    subplot(224)
-    plot(xtime,[navSolutions.PL(:).VRMS],'r',xtime,[navSolutions.PL(:).VRMS2],'b'), title('Vertical Positioning accuracy'), grid on, xlabel('Time [s]'), ylabel('VRMS [m]')
-
+    if settings.RAIM.enableRAIM==true
+        figure
+        subplot(221)
+        plot(xtime,[navSolutions.PL(:).HPL],'r',xtime,[navSolutions.PL(:).HPL2],'bo'), title('Horizontal Protection Level'), grid on, xlabel('Time [s]'), ylabel('HPL [m]')
+        subplot(222)
+        plot(xtime,[navSolutions.PL(:).VPL],'r',xtime,[navSolutions.PL(:).VPL2],'bo'), title('Vertical Protection Level'), grid on, xlabel('Time [s]'), ylabel('VPL [m]')
+        subplot(223)
+        plot(xtime,[navSolutions.PL(:).HRMS],'r',xtime,[navSolutions.PL(:).HRMS2],'b'), title('Horizontal Positioning accuracy'), grid on, xlabel('Time [s]'), ylabel('HRMS [m]')
+        subplot(224)
+        plot(xtime,[navSolutions.PL(:).VRMS],'r',xtime,[navSolutions.PL(:).VRMS2],'b'), title('Vertical Positioning accuracy'), grid on, xlabel('Time [s]'), ylabel('VRMS [m]')
+    end
     %% Writing on .kml file to visualize the track on Earth 
     KML_googleEarth([myfolder '.kml'],navSolutions.latitude,navSolutions.longitude,navSolutions.height)
     

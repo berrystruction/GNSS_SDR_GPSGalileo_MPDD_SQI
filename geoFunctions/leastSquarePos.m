@@ -1,4 +1,4 @@
-function [pos, el, az, dop, RAIMresult] = leastSquarePos(satpos, obs, settings, eph_for_IONO, TOW)
+function [pos, el, az, dop, RAIMresult, IONOcorrV] = leastSquarePos(satpos, obs, settings, eph_for_IONO, TOW)
 %Function calculates the Least Square Solution.
 %
 %[pos, el, az, dop] = leastSquarePos(satpos, obs, settings);
@@ -47,6 +47,7 @@ if eph_for_IONO.iflag==1 % if Ionospheric parameters exist
     Alpha=[eph_for_IONO.alpha_0 eph_for_IONO.alpha_1 eph_for_IONO.alpha_2 eph_for_IONO.alpha_3]';
     Beta=[eph_for_IONO.beta_0 eph_for_IONO.beta_1 eph_for_IONO.beta_2 eph_for_IONO.beta_3]';
 end
+IONOcorrV=zeros(nmbOfSatellites,1);
 
 %=== Iteratively find receiver position ===================================
 for iter = 1:nmbOfIterations
@@ -80,8 +81,9 @@ for iter = 1:nmbOfIterations
             
             % IONO corrections
             if eph_for_IONO.iflag==1 % if Ionospheric params exist, compute the correction
-                IONOcorr=Error_Ionospheric_Klobuchar(pos(1:3)',Rot_X',Alpha,Beta,TOW);
-                IONOcorr=IONOcorr*settings.c;
+                IONOcorrV(i)=Error_Ionospheric_Klobuchar(pos(1:3)',Rot_X',Alpha,Beta,TOW);
+                IONOcorrV(i)=IONOcorrV(i)*settings.c;
+                IONOcorr=IONOcorrV(i);
             else
                 IONOcorr=0;
             end
@@ -135,7 +137,7 @@ end
 pos = pos';
 
 %=== Calculate Dilution Of Precision ======================================
-if nargout  == 5
+if nargout >= 5
     %--- Initialize output ------------------------------------------------
     dop     = zeros(1, 5);
     
